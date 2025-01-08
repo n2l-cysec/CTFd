@@ -82,7 +82,7 @@ function calculateExpiry(date) {
 function createChallengeLinkElement(data, parent) {
 
 	var expires = document.createElement('span');
-	expires.textContent = "Suffering ends in " + calculateExpiry(new Date(data.expires)) + " minutes.";
+	expires.textContent = "Challenges will ends in " + calculateExpiry(new Date(data.expires)) + " minutes.";
 
 	parent.append(expires); 
 	parent.append(document.createElement('br'));
@@ -125,7 +125,7 @@ function view_container_info(challenge_id) {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.status == "Suffering hasn't begun") {
+        if (data.status == "Start the challenges by initiate the challenges to start hack-it, n2l always watching!") {
             alert.append(data.status);
             toggleChallengeCreate();
         } else if (data.status == "already_running") {
@@ -243,7 +243,7 @@ function container_stop(challenge_id) {
             toggleChallengeCreate();
         } else {
             // Success
-            alert.append("You have suffered enough.");
+            alert.append("Successfully stopped");
             toggleChallengeCreate();
             toggleChallengeUpdate();
         }

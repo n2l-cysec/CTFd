@@ -812,3 +812,12 @@ class ChallengeRequirements(Resource):
     def get(self, challenge_id):
         challenge = Challenges.query.filter_by(id=challenge_id).first_or_404()
         return {"success": True, "data": challenge.requirements}
+
+@challenges_namespace.route("/categories")
+class ChallengeCategories(Resource):
+    @challenges_namespace.doc(description="Endpoint to get Challenge categories in bulk")
+    def get(self):
+        chal_q = (Challenges.query.with_entities(Challenges.category).group_by(Challenges.category))
+        if not is_admin() or request.args.get("view") != "admin":
+            chal_q = chal_q.filter(and_(Challenges.state != "hidden", Challenges.state != "locked"))
+        return {"success": True, "data": [i.category for i in chal_q]}
